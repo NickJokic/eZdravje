@@ -1,4 +1,3 @@
-
 var baseUrl = 'https://rest.ehrscape.com/rest/v1';
 var queryUrl = baseUrl + '/query';
 
@@ -15,7 +14,7 @@ function getSessionId() {
     var response = $.ajax({
         type: "POST",
         url: baseUrl + "/session?username=" + encodeURIComponent(username) +
-                "&password=" + encodeURIComponent(password),
+            "&password=" + encodeURIComponent(password),
         async: false
     });
     return response.responseJSON.sessionId;
@@ -31,12 +30,96 @@ function getSessionId() {
  * @return ehrId generiranega pacienta
  */
 function generirajPodatke(stPacienta) {
-  ehrId = "";
+    ehrId = "";
 
-  // TODO: Potrebno implementirati
+    // TODO: Potrebno implementirati
 
-  return ehrId;
+    return ehrId;
+}
+
+function showValue(value) {
+    document.getElementById("range").innerHTML = value;
 }
 
 
+var lat = 0;
+var long = 0;
+
+//GOOGLE MAPS API
+function loadMaps() {
+
+
+    SearchPlaceMap = {
+        init: function() {
+            var self = this;
+            var lokacija = new google.maps.LatLng(lat, long);
+
+            self.map = new google.maps.Map(document.getElementById('hospitalMap'), {
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                center: lokacija,
+                zoom: 12
+            });
+
+
+            var request = {
+                location: lokacija,
+                radius: 35000,
+                types: ['hospital']
+            };
+
+            self.infowindow = new google.maps.InfoWindow();
+            var service = new google.maps.places.PlacesService(self.map);
+            service.nearbySearch(request, function(results, status) {
+                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    for (var i = 0; i < results.length; i++) {
+                        self.createMarker(results[i]);
+                    }
+                }
+            });
+        },
+
+        createMarker: function(place) {
+            var self = this;
+            var placeLoc = place.geometry.location;
+            var marker = new google.maps.Marker({
+                map: self.map,
+                position: place.geometry.location
+            });
+
+            google.maps.event.addListener(marker, 'click', function() {
+                self.infowindow.setContent(place.name);
+                self.infowindow.open(self.map, this);
+            });
+        }
+    }
+
+    SearchPlaceMap.init();
+
+};
+
+//GEOLOKACIJA
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    }
+    else {
+        alert("Geolocation is not supported by this browser.");
+    }
+}
+
+function showPosition(position) {
+
+    lat = position.coords.latitude;
+    long = position.coords.longitude;
+    console.log(lat + " " + long);
+    loadMaps();
+}
+//KONEC GEOLOKACIJE
+
+
 // TODO: Tukaj implementirate funkcionalnost, ki jo podpira vaša aplikacija
+$(window).ready(function() {
+    getLocation();
+
+
+});

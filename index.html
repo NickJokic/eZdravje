@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>eZdravje :: 4. DN :: OIS 2015/2016</title>
   <link href="knjiznice/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {padding-top: 70px;}
-  </style>
+  <link href="knjiznice/css/styles.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
   <script src="knjiznice/js/jquery-2.2.3.min.js"></script>
   <script src="knjiznice/js/bootstrap.min.js"></script>
   <script src="knjiznice/js/koda.js"></script>
+  <!-- <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places"></script> -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxIynHXCcct8kBSYrcQ8MTsdH6wtGuoFM&v=3.exp&libraries=places" type="text/javascript"></script>
+  
+<script async src="//cdn.embedly.com/widgets/platform.js" charset="UTF-8"></script>
 </head>
+
 <body>
 
   <!-- ZAČETEK: Menujska vrstica na vrhu spletne strani -->
@@ -22,7 +27,7 @@
           <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
         </button>
         <!-- ZAČETEK: Ime vaše aplikacije -->
-        <a class="navbar-brand" href="index.html">{ime vaše aplikacije}</a>
+        <a class="navbar-brand" href="index.html"><i class="icon-heart"></i> Stop infarkt</a>
         <!-- KONEC: Ime vaše aplikacije -->
       </div>
       <div class="collapse navbar-collapse" id="menujska-vrstica">
@@ -37,14 +42,318 @@
   <!-- KONEC: Menujska vrstica na vrhu spletne strani -->
 
   <!-- ZAČETEK: Vsebina aplikacije -->
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12 text-center">
-        <p class="lead"><strong>TO-DO</strong>: Na tem mestu implementirajte vašo aplikacijo.</p>
+
+
+
+  <div class="container-fluid ">
+    <div class="row text-left">
+
+      <div class="col-lg-12">
+        <h1>Preventiva srčnih obolenj</h1>
       </div>
+    </div>
+
+
+    <div class="row">
+      <!-- KREIRANJE EHR ZAPISA ZA PACIENTA -->
+      <div class="col-lg-4">
+
+        <div class="panel panel-default">
+
+          <div class="panel-heading">
+            <div class="row">
+
+              <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6">
+                <h4>Kreiranje EHR zapisa</h4>
+              </div>
+
+              <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6">
+                <select id="kreirajTemplate" class="form-control">
+                  <option value=""></option>
+                  <option value="p1">p1</option>
+                  <option value="p2">p2</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="panel-body">
+
+            <span class="label label-default">Ime</span>
+            <div class="form-group">
+              <input id="nameForm" type="text" class="form-control" placeholder="Janez" aria-describedby="sizing-addon1">
+            </div>
+
+            <span class="label label-default">Priimek</span>
+            <div class="form-group">
+              <input id="surnameForm" type="text" class="form-control" placeholder="Novak" aria-describedby="basic-addon1">
+            </div>
+
+            <span class="label label-default">Datum rojstva</span>
+            <div class="form-group">
+              <input id="birthDateForm" type="text" class="form-control" placeholder="1957-03-10T09:08" aria-describedby="basic-addon1">
+            </div>
+
+            <div class="row">
+              <div class="col-lg-4">
+                <span class="label label-default">Kajenje</span>
+                <select id="kadilec" class="form-control">
+                  <option value="0">Nekadilec</option>
+                  <option value="1">Aktivni</option>
+                  <option value="2">Pasivni</option>
+                </select>
+              </div>
+
+              <div class="col-lg-4">
+                <span id="alkohol" class="label label-default">Alkohol</span>
+                <select class="form-control">
+                  <option value="0">
+                    < 2 dcl/dan</option>
+                      <option value="1">2 dcl - 8 dcl/dan</option>
+                      <option value="2">> 8 dcl/dan</option>
+                </select>
+              </div>
+
+              <div class="col-lg-4">
+                <span class="label label-default">Telovadba</span>
+                <select id="vadba" class="form-control">
+                  <option value="0">
+                    < 75 min/teden</option>
+                      <option value="1">> 75 min/teden</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-10 col-sm-10 col-md-10 col-xs-10">
+
+                <span class="label label-default">Količina stresa (0-5)</span>
+                <input id="stres" class="form-control" type="range" min="0" max="5" value="0" step="1" onchange="showValue(this.value)" />
+
+              </div>
+              <div class="col-lg-2 col-sm-2 col-md-2 col-xs-2 text-center"><span id="range">0</span></div>
+            </div>
+
+            <button id="kreirajEHR" class="btn btn-primary" type="button">Kreiraj EHR</button>
+            <span id="kreiranjeObvestilo"><div class="alert alert-success" role="alert">EHRID uspešno kreiran: </div></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- DODAJANJE MERITVE ZA PACIENTA -->
+      <div class="col-lg-8">
+
+        <div class="panel panel-default">
+
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-lg-8 col-sm-8 col-md-8 col-xs-8">
+                <h4>Dodajanje meritve</h4>
+              </div>
+              <div class="col-lg-4 col-sm-4 col-md-4 col-xs-4">
+                <select id="meritveTemplate" class="form-control">
+                  <option value=""></option>
+                  <option value="p1">p1</option>
+                  <option value="p2">p2</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="panel-body">
+            <div class="row">
+
+              <div class="col-lg-6">
+                <span class="label label-default">EHR ID</span>
+                <div class="form-group">
+                  <input id="ehrIdVital" type="text" class="form-control" placeholder="7b661e12-3a98-21ad-c29e-2dc9f5a3d885" aria-describedby="sizing-addon1">
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <span class="label label-default">Datum in ura</span>
+                <div class="form-group">
+                  <input id="dateVital" type="text" class="form-control" placeholder="1957-03-10T09:08" aria-describedby="basic-addon1">
+                </div>
+              </div>
+            </div>
+            <!--ROW-->
+
+            <div class="row">
+
+              <div class="col-lg-6">
+                <span class="label label-default">Telesna temperatura</span>
+                <div class="input-group">
+                  <input id="tempVital" type="text" class="form-control" placeholder="36.5">
+                  <span class="input-group-addon">°C</span>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <span class="label label-default">Telesna teža</span>
+                <div class="input-group">
+                  <input id="weightVital" type="text" class="form-control" placeholder="74">
+                  <span class="input-group-addon">kg</span>
+                </div>
+              </div>
+
+            </div>
+            <!--ROW-->
+
+
+            <div class="row">
+
+              <div class="col-lg-6">
+                <span class="label label-default">Telesna višina</span>
+                <div class="input-group">
+                  <input id="heightVital" type="text" class="form-control" placeholder="180">
+                  <span class="input-group-addon">cm</span>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <span class="label label-default">Sistolični tlak</span>
+                <div class="input-group">
+                  <input id="systolicVital" type="text" class="form-control" placeholder="120">
+                  <span class="input-group-addon">mm/Hg</span>
+                </div>
+              </div>
+            </div>
+            <!--ROW-->
+
+            <div class="row">
+
+              <div class="col-lg-6">
+                <span class="label label-default">Diastolični tlak</span>
+                <div class="input-group">
+                  <input id="diastolicVital" type="text" class="form-control" placeholder="90">
+                  <span class="input-group-addon">mm/Hg</span>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <span class="label label-default">Saturacija</span>
+                <div class="input-group">
+                  <input id="saturationVital" type="text" class="form-control" placeholder="97">
+                  <span class="input-group-addon">%</span>
+                </div>
+              </div>
+            </div>
+            <!--ROW-->
+
+
+            <button id="dodajMeritev" class="btn btn-primary" type="button">Dodaj meritev</button>
+            <span id="vitalObvestilo"><div class="alert alert-success" role="alert">Meritev uspešno dodana! </div></span>
+
+          </div>
+
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="row">
+
+      <!-- ADDITIONAL RESOURCES (APIS) -->
+      <div class="col-lg-4">
+
+        <div class="panel panel-default">
+
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-lg-12">
+                <h4>Ostali viri</h4>
+                <ul class="nav nav-tabs">
+                  <li class="active"><a data-toggle="tab" href="#home">Zdravstvene ustanove</a></li>
+                  <li><a data-toggle="tab" href="#menu1">Članek</a></li>
+                  <li><a data-toggle="tab" href="#menu2">Video</a></li>
+                  <li><a data-toggle="tab" href="#menu3">Statistika</a></li>
+                </ul>
+
+
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-body">
+            <div class="tab-content">
+              <div id="home" class="tab-pane fade in active">
+                <h3>Zdravstvene ustanove v bližnji okolici</h3>
+                <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
+                  <div id="hospitalMap"></div>
+                </div>
+              </div>
+              <div id="menu1" class="tab-pane fade">
+                <h3>Wikipedija članek o infarktu</h3>
+                <blockquote class="embedly-card" data-card-key="0e18f68dc2374fcfa46acc40e3001d10" data-card-controls="0" data-card-branding="0" data-card-type="article"><h4><a href="https://sl.wikipedia.org/wiki/Miokardni_infarkt">Miokardni infarkt</a></h4><p>Miokardni infarkt oz. akutni miokardni infarkt, bolj znan pod izrazom ( akutna) srčna kap ali srčni napad, je ena izmed 3 oblik akutnega koronarnega sindroma (preostali 2 obliki sta nestabilna angina pektoris in nenadna ishemična srčna smrt). Je najpogostejši vzrok smrti v razvitih državah.</p></blockquote>
+
+              </div>
+              <div id="menu2" class="tab-pane fade">
+                <h3>Video - Miokardialni infarkt</h3>
+                <iframe id="youtubeVid" width="560" height="350" src="https://www.youtube.com/embed/T_b9U5gn_Zk" frameborder="0" allowfullscreen></iframe>
+              </div>
+              <div id="menu3" class="tab-pane fade">
+                <h3>Menu 3</h3>
+                <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+      <div class="col-lg-8">
+
+        <div class="panel panel-default">
+
+          <div class="panel-heading">
+            <div class="row">
+
+              <div class="col-lg-8 col-sm-8 col-md-8 col-xs-8">
+                <h4>Analiza pacienta</h4>
+              </div>
+
+              <div class="col-lg-4 col-sm-4 col-md-4 col-xs-4">
+                <select id="analyzeTemplate" class="form-control">
+                  <option value=""></option>
+                  <option value="p1">p1</option>
+                  <option value="p2">p2</option>
+                </select>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-lg-12">
+                <span class="label label-default">EHR ID</span>
+                <div class="form-group">
+                  <input id="ehrIdVital" type="text" class="form-control" placeholder="7b661e12-3a98-21ad-c29e-2dc9f5a3d885" aria-describedby="sizing-addon1">
+                </div>
+                <button id="analyze" class="btn btn-primary" type="button">Analiziraj</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
     </div>
   </div>
   <!-- KONEC: Vsebina aplikacije -->
 
 </body>
+
 </html>

@@ -1,0 +1,52 @@
+head,
+body {
+    width: 100%;
+    background-color: #DDEBF0;
+}
+
+body {
+    padding-top: 70px;
+}
+
+h1 {
+    text-transform: uppercase;
+    letter-spacing: 0.17em;
+    font-size: 2em;
+}
+
+.panel {
+    border: 1px solid #CCC;
+    min-height: 563px !important;
+}
+
+.alert {
+    margin-top: 10px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+select {
+    margin-bottom: 15px;
+}
+
+#stres {
+    margin-bottom: 15px;
+}
+
+#range {
+    top: 18px;
+    position: relative;
+    font-size: 2em;
+}
+
+#hospitalMap {
+    position: static !important;
+    min-height: 350px;
+    max-width: 100%;
+}
+
+#youtubeVid {
+    max-width: 100%;
+}
