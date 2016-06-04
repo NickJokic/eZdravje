@@ -2,10 +2,12 @@ head,
 body {
     width: 100%;
     background-color: #DDEBF0;
+    font-size: 1.1em;
 }
 
 body {
     padding-top: 70px;
+    padding-bottom: 80px;
 }
 
 h1 {
@@ -14,9 +16,9 @@ h1 {
     font-size: 2em;
 }
 
-.panel {
+.okvir {
     border: 1px solid #CCC;
-    min-height: 563px !important;
+    min-height: 538px !important;
 }
 
 .alert {
@@ -49,4 +51,8 @@ select {
 
 #youtubeVid {
     max-width: 100%;
+}
+
+.material-icons {
+    font-size: 10em !important;
 }

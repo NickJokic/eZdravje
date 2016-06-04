@@ -3,17 +3,22 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>eZdravje :: 4. DN :: OIS 2015/2016</title>
   <link href="knjiznice/css/bootstrap.min.css" rel="stylesheet">
   <link href="knjiznice/css/styles.css" rel="stylesheet">
-  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+  <script src="https://use.fontawesome.com/8149a76b94.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
   <script src="knjiznice/js/jquery-2.2.3.min.js"></script>
   <script src="knjiznice/js/bootstrap.min.js"></script>
   <script src="knjiznice/js/koda.js"></script>
-  <!-- <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places"></script> -->
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxIynHXCcct8kBSYrcQ8MTsdH6wtGuoFM&v=3.exp&libraries=places" type="text/javascript"></script>
-  
-<script async src="//cdn.embedly.com/widgets/platform.js" charset="UTF-8"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxIynHXCcct8kBSYrcQ8MTsdH6wtGuoFM&v=3.exp&libraries=places" type="text/javascript"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+  <script async src="//cdn.embedly.com/widgets/platform.js" charset="UTF-8"></script>
 </head>
 
 <body>
@@ -27,14 +32,14 @@
           <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
         </button>
         <!-- ZAČETEK: Ime vaše aplikacije -->
-        <a class="navbar-brand" href="index.html"><i class="icon-heart"></i> Stop infarkt</a>
+        <a class="navbar-brand" href="index.html"><i class="fa fa-heartbeat" aria-hidden="true"></i> Stop infarkt</a>
         <!-- KONEC: Ime vaše aplikacije -->
       </div>
       <div class="collapse navbar-collapse" id="menujska-vrstica">
         <ul class="nav navbar-nav">
           <li><a href="opis.html">Opis ideje</a></li>
           <li><a href="nacrt.html">Načrt informacijske rešitve</a></li>
-          <li><a href="#">Generiranje podatkov</a></li>
+          <li><a id="generirajPodatkeButton" href="#">Generiranje podatkov</a></li>
         </ul>
       </div>
     </div>
@@ -50,6 +55,9 @@
 
       <div class="col-lg-12">
         <h1>Preventiva srčnih obolenj</h1>
+        <span id="generiranjeObvestilo"></span>
+
+
       </div>
     </div>
 
@@ -58,7 +66,7 @@
       <!-- KREIRANJE EHR ZAPISA ZA PACIENTA -->
       <div class="col-lg-4">
 
-        <div class="panel panel-default">
+        <div class="panel panel-default okvir">
 
           <div class="panel-heading">
             <div class="row">
@@ -69,9 +77,10 @@
 
               <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6">
                 <select id="kreirajTemplate" class="form-control">
-                  <option value=""></option>
-                  <option value="p1">p1</option>
-                  <option value="p2">p2</option>
+                  <option value="3"></option>
+                  <option value="0">Janez Novak</option>
+                  <option value="1">Miha Piha</option>
+                  <option value="2">Peter Klepec</option>
                 </select>
               </div>
             </div>
@@ -106,12 +115,11 @@
               </div>
 
               <div class="col-lg-4">
-                <span id="alkohol" class="label label-default">Alkohol</span>
-                <select class="form-control">
+                <span class="label label-default">Alkohol</span>
+                <select id="alkohol" class="form-control">
                   <option value="0">
-                    < 2 dcl/dan</option>
-                      <option value="1">2 dcl - 8 dcl/dan</option>
-                      <option value="2">> 8 dcl/dan</option>
+                    < 2 enoti/dan</option>
+                      <option value="1">>= 2 enoti/dan</option>
                 </select>
               </div>
 
@@ -136,7 +144,7 @@
             </div>
 
             <button id="kreirajEHR" class="btn btn-primary" type="button">Kreiraj EHR</button>
-            <span id="kreiranjeObvestilo"><div class="alert alert-success" role="alert">EHRID uspešno kreiran: </div></span>
+            <span id="kreiranjeObvestilo"></span>
           </div>
         </div>
       </div>
@@ -144,7 +152,7 @@
       <!-- DODAJANJE MERITVE ZA PACIENTA -->
       <div class="col-lg-8">
 
-        <div class="panel panel-default">
+        <div class="panel panel-default okvir">
 
           <div class="panel-heading">
             <div class="row">
@@ -153,9 +161,10 @@
               </div>
               <div class="col-lg-4 col-sm-4 col-md-4 col-xs-4">
                 <select id="meritveTemplate" class="form-control">
-                  <option value=""></option>
-                  <option value="p1">p1</option>
-                  <option value="p2">p2</option>
+                  <option value="3"></option>
+                  <option value="0">Janez Novak</option>
+                  <option value="1">Miha Piha</option>
+                  <option value="2">Peter Klepec</option>
                 </select>
               </div>
             </div>
@@ -233,19 +242,13 @@
                 </div>
               </div>
 
-              <div class="col-lg-6">
-                <span class="label label-default">Saturacija</span>
-                <div class="input-group">
-                  <input id="saturationVital" type="text" class="form-control" placeholder="97">
-                  <span class="input-group-addon">%</span>
-                </div>
-              </div>
+
             </div>
             <!--ROW-->
 
 
             <button id="dodajMeritev" class="btn btn-primary" type="button">Dodaj meritev</button>
-            <span id="vitalObvestilo"><div class="alert alert-success" role="alert">Meritev uspešno dodana! </div></span>
+            <span id="vitalObvestilo"></span>
 
           </div>
 
@@ -260,17 +263,17 @@
       <!-- ADDITIONAL RESOURCES (APIS) -->
       <div class="col-lg-4">
 
-        <div class="panel panel-default">
+        <div class="panel panel-default okvir">
 
           <div class="panel-heading">
             <div class="row">
               <div class="col-lg-12">
                 <h4>Ostali viri</h4>
                 <ul class="nav nav-tabs">
-                  <li class="active"><a data-toggle="tab" href="#home">Zdravstvene ustanove</a></li>
-                  <li><a data-toggle="tab" href="#menu1">Članek</a></li>
-                  <li><a data-toggle="tab" href="#menu2">Video</a></li>
-                  <li><a data-toggle="tab" href="#menu3">Statistika</a></li>
+                  <li class="active"><a data-toggle="tab" href="#home"><i class="fa fa-map-marker" aria-hidden="true"></i> Zdravstvene ustanove</a></li>
+                  <li><a data-toggle="tab" href="#menu1"><i class="fa fa-book" aria-hidden="true"></i> Članek</a></li>
+                  <li><a data-toggle="tab" href="#menu2"><i class="fa fa-youtube" aria-hidden="true"></i> Video</a></li>
+                  <li><a data-toggle="tab" href="#menu3"><i class="fa fa-line-chart" aria-hidden="true"></i> Statistika</a></li>
                 </ul>
 
 
@@ -287,17 +290,21 @@
                 </div>
               </div>
               <div id="menu1" class="tab-pane fade">
-                <h3>Wikipedija članek o infarktu</h3>
-                <blockquote class="embedly-card" data-card-key="0e18f68dc2374fcfa46acc40e3001d10" data-card-controls="0" data-card-branding="0" data-card-type="article"><h4><a href="https://sl.wikipedia.org/wiki/Miokardni_infarkt">Miokardni infarkt</a></h4><p>Miokardni infarkt oz. akutni miokardni infarkt, bolj znan pod izrazom ( akutna) srčna kap ali srčni napad, je ena izmed 3 oblik akutnega koronarnega sindroma (preostali 2 obliki sta nestabilna angina pektoris in nenadna ishemična srčna smrt). Je najpogostejši vzrok smrti v razvitih državah.</p></blockquote>
+                <h3>Wikipedia članek o infarktu</h3>
+                <blockquote class="embedly-card" data-card-key="0e18f68dc2374fcfa46acc40e3001d10" data-card-controls="0" data-card-branding="0" data-card-type="article">
+                  <h4><a href="https://sl.wikipedia.org/wiki/Miokardni_infarkt">Miokardni infarkt</a></h4>
+                  <p>Miokardni infarkt oz. akutni miokardni infarkt, bolj znan pod izrazom ( akutna) srčna kap ali srčni napad, je ena izmed 3 oblik akutnega koronarnega sindroma (preostali 2 obliki sta nestabilna angina pektoris in nenadna ishemična srčna
+                    smrt). Je najpogostejši vzrok smrti v razvitih državah.</p>
+                </blockquote>
 
               </div>
               <div id="menu2" class="tab-pane fade">
                 <h3>Video - Miokardialni infarkt</h3>
                 <iframe id="youtubeVid" width="560" height="350" src="https://www.youtube.com/embed/T_b9U5gn_Zk" frameborder="0" allowfullscreen></iframe>
               </div>
-              <div id="menu3" class="tab-pane fade">
-                <h3>Menu 3</h3>
-                <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+              <div id="menu3" class="tab-pane fade text-left">
+                <h3>Statistika</h3>
+                <canvas id="myChart" max-width="400" max-height="350"></canvas>
               </div>
             </div>
 
@@ -313,22 +320,25 @@
 
       <div class="col-lg-8">
 
-        <div class="panel panel-default">
+        <div class="panel panel-primary okvir">
 
           <div class="panel-heading">
             <div class="row">
 
               <div class="col-lg-8 col-sm-8 col-md-8 col-xs-8">
-                <h4>Analiza pacienta</h4>
+                <h4>Analiza zadnje meritve pacienta</h4>
               </div>
 
               <div class="col-lg-4 col-sm-4 col-md-4 col-xs-4">
                 <select id="analyzeTemplate" class="form-control">
-                  <option value=""></option>
-                  <option value="p1">p1</option>
-                  <option value="p2">p2</option>
+                  <option value="3"></option>
+                  <option value="0">Janez Novak</option>
+                  <option value="1">Miha Piha</option>
+                  <option value="2">Peter Klepec</option>
                 </select>
               </div>
+
+
 
             </div>
           </div>
@@ -338,17 +348,192 @@
               <div class="col-lg-12">
                 <span class="label label-default">EHR ID</span>
                 <div class="form-group">
-                  <input id="ehrIdVital" type="text" class="form-control" placeholder="7b661e12-3a98-21ad-c29e-2dc9f5a3d885" aria-describedby="sizing-addon1">
+                  <input id="ehrIdAnalyze" type="text" class="form-control" placeholder="7b661e12-3a98-21ad-c29e-2dc9f5a3d885" aria-describedby="sizing-addon1">
                 </div>
                 <button id="analyze" class="btn btn-primary" type="button">Analiziraj</button>
+                <span id="analyzeObvestilo"></span>
+              </div>
+            </div>
+
+            <hr>
+            <div class="row">
+              <div class="col-lg-6">
+                <h4><b>Podatki o pacientu:</b></h4>
+              </div>
+            </div>
+            <div class="row" style="margin-top:15px;">
+              <div class="col-lg-4">
+                <span id="imeInfo">Ime:</span>
+              </div>
+              <div class="col-lg-4">
+                <span id="bDayInfo">Datum rojstva:</span>
+              </div>
+              <div class="col-lg-4">
+                <span id="datumMeritveInfo">Datum meritve:</span>
+              </div>
+            </div>
+
+            <div class="row" style="margin-top:15px;">
+              <div class="col-lg-4">
+                <span id="tezaInfo">Telesna teža:</span>
+              </div>
+              <div class="col-lg-4">
+                <span id="visinaInfo">Telesna višina:</span>
               </div>
 
+              <div class="col-lg-4">
+                <span id="kajenjeInfo">Kajenje:</span>
+              </div>
+
+            </div>
+
+            <div class="row" style="margin-top:15px;">
+              <div class="col-lg-4">
+                <span id="alkoholInfo">Alkohol:</span>
+              </div>
+              <div class="col-lg-4">
+                <span id="vadbaInfo">Vadba:</span>
+              </div>
+              <div class="col-lg-4">
+                <span id="stresInfo">Količina stresa:</span>
+              </div>
+
+            </div>
+
+            <div class="row" style="margin-top:15px;">
+              <div class="col-lg-12">
+                <ul class="nav nav-tabs">
+                  <li id="0tab" class="active"><a data-toggle="tab" href="#vitalniTab"><i class="fa fa-medkit"></i> Vitalni znaki</a></li>
+                  <li id="1tab">
+                    <a data-toggle="tab" href="#preventivniTab"><i class="fa fa-stethoscope"></i> Preventivni ukrepi</a>
+                  </li>
+
+                </ul>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="tab-content">
+                  <div id="vitalniTab" class="tab-pane fade active in">
+                    <h3>Vitalni znaki</h3>
+                    <h5>Preverjanje kritičnih vitalnih znakov, ki vplivajo na tveganje za srčno kap</h5>
+                    <hr>
+
+                    <div class="row">
+                      <!-- LEVI STOLPEC -->
+                      <div class="col-lg-6">
+
+                        <div class="col-lg-4">
+                          <h4>ITM:</h4>
+                        </div>
+
+                        <div class="col-lg-8">
+                          <h4 id="obvestiloBMI">
+                          <!--<span  class="obvestilo label label-success fade-in" data-toggle="tooltip" data-placement="top" title="Idealna vrednost: 18.5 - 24.9">20.41, ITM je normalen.</span> -->
+                        </h4>
+                        </div>
+                      </div>
+                      <!-- DESNI STOLPEC -->
+                      <div class="col-lg-6">
+
+                        <div class="col-lg-4">
+                          <h4>Temperatura:</h4>
+                        </div>
+
+                        <div class="col-lg-8">
+                          <h4 id="obvestiloTemp">
+                          <!-- <span  class="obvestilo label label-warning fade-in" data-toggle="tooltip" data-placement="top" title="Normalna vrednost: 36.2 - 37.2">38°C, temperatura je previsoka!</span> -->
+                            </h4>
+                        </div>
+
+                      </div>
+                    </div>
+                    <!-- END OF FIRST ROW -->
+
+                    <div class="row">
+                      <!-- LEVI STOLPEC -->
+                      <div class="col-lg-6">
+
+                        <div class="col-lg-4">
+                          <h4>Sistolični tlak:</h4>
+
+                        </div>
+
+                        <div class="col-lg-8">
+                          <h4 id="obvestiloSystolic">
+                          <!-- <span class="obvestilo label label-danger fade-in" data-toggle="tooltip" data-placement="top" title="Idealna vrednost: 90 - 120 mm/Hg">150 mm/Hg, tlak je previsok!.</span> -->
+                        </h4>
+                        </div>
+                      </div>
+                      <!-- DESNI STOLPEC -->
+                      <div class="col-lg-6">
+
+                        <div class="col-lg-4">
+                          <h4>Diastolični tlak:</h4>
+                        </div>
+
+                        <div class="col-lg-8">
+                          <h4 id="obvestiloDiastolic">
+                          <!-- <span  class="obvestilo label label-warning fade-in" data-toggle="tooltip" data-placement="top" title="Idealna vrednost: 60 - 80 mm/Hg">90 mm/Hg, tlak je previsok!</span> -->
+                            </h4>
+                        </div>
+
+                      </div>
+                    </div>
+                    <!-- END OF SECOND ROW -->
+
+                    <div class="row text-center">
+                      <div class="col-lg-12">
+                        <button id="kUkrepomButton" class="btn btn-primary disabled" data-toggle="tab" href="#" style="margin-top:15px;">K ukrepom!</button>
+                      </div>
+                    </div>
+
+                  </div>
+                  <!-- END OF VITALNI TAB -->
+
+                  <div id="preventivniTab" class="tab-pane fade">
+                    <h3>Preventivni ukrepi</h3>
+                    <h4 id="vseJeVredi"></h4>
+                    <div class="row text-center">
+
+                      <div id="smokingInfoTab" class="col-sm-3" style="display:none;">
+                        <a href="#smokingIcon" data-toggle="collapse" title="Kajenje"><i class="material-icons">smoke_free</i></a>
+                        <div id="smokingIcon" class="collapse">
+                          <p id="kajenjePrevenitva"></p>
+                        </div>
+                      </div>
+
+                      <div id="alcoholInfoTab" class="col-sm-3" style="display:none;">
+                        <a href="#alcoholIcon" data-toggle="collapse" title="Alkohol"><i class="material-icons">local_bar</i></a>
+                        <div id="alcoholIcon" class="collapse">
+                          <p id="alkoholPrevenitva"></p>
+                        </div>
+                      </div>
+
+                      <div id="workoutInfoTab" class="col-sm-3" style="display:none;">
+                        <a href="#workoutIcon" data-toggle="collapse" title="Telovadba"><i class="material-icons">directions_run</i></a>
+                        <div id="workoutIcon" class="collapse">
+                          <p id="telovadbaPrevenitva"></p>
+                        </div>
+                      </div>
+
+
+                      <div id="stressInfoTab" class="col-sm-3" style="display:none;">
+                        <a href="#stressIcon" data-toggle="collapse" title="Stres"><i class="material-icons">sentiment_very_dissatisfied</i></a>
+                        <div id="stressIcon" class="collapse">
+                          <p id="stresPrevenitva"></p>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
-
 
     </div>
   </div>
