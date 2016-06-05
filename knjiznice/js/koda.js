@@ -458,8 +458,8 @@ function analizirajPodatke() {
         analizaTemp(trenutniTemp);
 
         //ANALIZIRAJ TLAK
-        analyzeSyst(trenutniSystolic);
-        analyzeDiast(trenutniDiastolic);
+        analizaSist(trenutniSystolic);
+        analizaDiast(trenutniDiastolic);
         $('[data-toggle="tooltip"]').tooltip();
 
         if (stUkrepov === 0) {
@@ -516,7 +516,7 @@ function analizaTemp(temp) {
 }
 
 //SYSTOLIC
-function analyzeSyst(syst) {
+function analizaSist(syst) {
     if (syst < 90) {
         $("#obvestiloSystolic").html("<span class='obvestilo label label-warning fade-in' data-toggle='tooltip' data-placement='top' title='Idealna vrednost: 90 - 120 mm/Hg' >" + syst + ", sist. tlak je prenizek" + ".</span>");
     }
@@ -535,7 +535,7 @@ function analyzeSyst(syst) {
 }
 
 //DIASTOLIC
-function analyzeDiast(diast) {
+function analizaDiast(diast) {
     if (diast < 60) {
         $("#obvestiloDiastolic").html("<span class='obvestilo label label-warning fade-in' data-toggle='tooltip' data-placement='top' title='Idealna vrednost: 60 - 80 mm/Hg' >" + diast + ", diast. tlak je prenizek" + ".</span>");
     }
@@ -742,21 +742,6 @@ var moskiPodatki = [];
 var zenskiPodatki = [];
 var letnicePodatki = [];
 
-/*
-function preberiJsonGraf(callback) {
-
-    var url = "http://apps.who.int/gho/athena/api/GHO/TOBACCO_0000000344,TOBACCO_0000000192.json?profile=simple&filter=COUNTRY:SVN;REGION:EUR;SEX:*;";
-    
-    $.getJSON(url, function(json){
-        console.log(json);
-        callback();
-    })
-
-
-}*/
-
-
-
 function preberiJsonGraf(callback) {
 
     var url = "statistika.json";
@@ -790,9 +775,9 @@ function preberiJsonGraf(callback) {
 
 //MAIN ONLOAD
 $(document).ready(function() {
+
     preberiJsonGraf(function() {
         narisiGraf();
-
     });
 
     $('[data-toggle="tooltip"]').tooltip();
@@ -825,7 +810,7 @@ $(document).ready(function() {
         $("#systolicVital").val(meritvePacientov[index][5]);
         $("#diastolicVital").val(meritvePacientov[index][6]);
     });
-    
+
     //izberi iz padajočega menija
     $("#analyzeTemplate").change(function() {
         var index = $("#analyzeTemplate").val();
