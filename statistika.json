@@ -1,0 +1,156 @@
+{
+  "dimension": [
+                 {
+                   "label": "GHO",
+                   "display": "Indicator"
+                 },
+                 {
+                   "label": "PUBLISHSTATE",
+                   "display": "PUBLISH STATES"
+                 },
+                 {
+                   "label": "YEAR",
+                   "display": "Year"
+                 },
+                 {
+                   "label": "REGION",
+                   "display": "WHO region"
+                 },
+                 {
+                   "label": "COUNTRY",
+                   "display": "Country"
+                 },
+                 {
+                   "label": "SEX",
+                   "display": "Sex"
+                 }
+               ],
+    "fact": [
+              {
+                "dims": {
+                          "COUNTRY": "Slovenia",
+                          "YEAR": "2025",
+                          "GHO": "Prevalence of smoking any tobacco product among persons aged >= 15 years",
+                          "SEX": "Female"
+                        },
+                "Value": "15.9 [9.6-24.1]"
+              },
+              {
+                "dims": {
+                          "COUNTRY": "Slovenia",
+                          "YEAR": "2025",
+                          "GHO": "Prevalence of smoking any tobacco product among persons aged >= 15 years",
+                          "SEX": "Male"
+                        },
+                "Value": "18.7 [11.5-28.7]"
+              },
+              {
+                "dims": {
+                          "COUNTRY": "Slovenia",
+                          "YEAR": "2020",
+                          "GHO": "Prevalence of smoking any tobacco product among persons aged >= 15 years",
+                          "SEX": "Female"
+                        },
+                "Value": "17.0 [11.0-23.4]"
+              },
+              {
+                "dims": {
+                          "COUNTRY": "Slovenia",
+                          "YEAR": "2020",
+                          "GHO": "Prevalence of smoking any tobacco product among persons aged >= 15 years",
+                          "SEX": "Male"
+                        },
+                "Value": "20.4 [13.5-28.8]"
+              },
+              {
+                "dims": {
+                          "COUNTRY": "Slovenia",
+                          "YEAR": "2015",
+                          "GHO": "Prevalence of smoking any tobacco product among persons aged >= 15 years",
+                          "SEX": "Female"
+                        },
+                "Value": "18.1 [13.3-23.4]"
+              },
+              {
+                "dims": {
+                          "COUNTRY": "Slovenia",
+                          "YEAR": "2015",
+                          "GHO": "Prevalence of smoking any tobacco product among persons aged >= 15 years",
+                          "SEX": "Male"
+                        },
+                "Value": "22.3 [16.0-28.6]"
+              },
+              {
+                "dims": {
+                          "COUNTRY": "Slovenia",
+                          "YEAR": "2012",
+                          "GHO": "Prevalence of smoking any tobacco product among persons aged >= 15 years",
+                          "SEX": "Female"
+                        },
+                "Value": "18.9 [14.4-23.6]"
+              },
+              {
+                "dims": {
+                          "COUNTRY": "Slovenia",
+                          "YEAR": "2012",
+                          "GHO": "Prevalence of smoking any tobacco product among persons aged >= 15 years",
+                          "SEX": "Male"
+                        },
+                "Value": "23.6 [18.3-29.8]"
+              },
+              {
+                "dims": {
+                          "COUNTRY": "Slovenia",
+                          "YEAR": "2010",
+                          "GHO": "Prevalence of smoking any tobacco product among persons aged >= 15 years",
+                          "SEX": "Female"
+                        },
+                "Value": "19.5 [15.1-24.1]"
+              },
+              {
+                "dims": {
+                          "COUNTRY": "Slovenia",
+                          "YEAR": "2010",
+                          "GHO": "Prevalence of smoking any tobacco product among persons aged >= 15 years",
+                          "SEX": "Male"
+                        },
+                "Value": "24.6 [19.8-30.6]"
+              },
+              {
+                "dims": {
+                          "COUNTRY": "Slovenia",
+                          "YEAR": "2005",
+                          "GHO": "Prevalence of smoking any tobacco product among persons aged >= 15 years",
+                          "SEX": "Female"
+                        },
+                "Value": "21.0 [16.7-24.9]"
+              },
+              {
+                "dims": {
+                          "COUNTRY": "Slovenia",
+                          "YEAR": "2005",
+                          "GHO": "Prevalence of smoking any tobacco product among persons aged >= 15 years",
+                          "SEX": "Male"
+                        },
+                "Value": "27.0 [21.6-32.1]"
+              },
+              {
+                "dims": {
+                          "COUNTRY": "Slovenia",
+                          "YEAR": "2000",
+                          "GHO": "Prevalence of smoking any tobacco product among persons aged >= 15 years",
+                          "SEX": "Female"
+                        },
+                "Value": "22.6 [18.3-28.2]"
+              },
+              {
+                "dims": {
+                          "COUNTRY": "Slovenia",
+                          "YEAR": "2000",
+                          "GHO": "Prevalence of smoking any tobacco product among persons aged >= 15 years",
+                          "SEX": "Male"
+                        },
+                "Value": "29.9 [23.9-36.7]"
+              }
+      ]
+}

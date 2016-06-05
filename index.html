@@ -54,11 +54,12 @@
     <div class="row text-left">
 
       <div class="col-lg-12">
-        <h1>Preventiva srčnih obolenj</h1>
+        <h1><i class="fa fa-heartbeat" aria-hidden="true"></i> Stop infarkt</h1>
+        <h4>Preventiva, analiza in obveščevanje</h4>
+        <hr>
         <span id="generiranjeObvestilo"></span>
-
-
       </div>
+
     </div>
 
 
@@ -275,8 +276,6 @@
                   <li><a data-toggle="tab" href="#menu2"><i class="fa fa-youtube" aria-hidden="true"></i> Video</a></li>
                   <li><a data-toggle="tab" href="#menu3"><i class="fa fa-line-chart" aria-hidden="true"></i> Statistika</a></li>
                 </ul>
-
-
               </div>
             </div>
           </div>
@@ -299,23 +298,20 @@
 
               </div>
               <div id="menu2" class="tab-pane fade">
-                <h3>Video - Miokardialni infarkt</h3>
-                <iframe id="youtubeVid" width="560" height="350" src="https://www.youtube.com/embed/T_b9U5gn_Zk" frameborder="0" allowfullscreen></iframe>
+                <h3>Video - Miokardni infarkt</h3>
+                <iframe id="youtubeVid" width="560" height="350" src="https://www.youtube.com/embed/gGY2CsFsiAk" frameborder="0" allowfullscreen></iframe>
               </div>
               <div id="menu3" class="tab-pane fade text-left">
                 <h3>Statistika</h3>
+                <h4>Trend uporabe tobačnih izdelkov v Sloveniji [%]</h4>
                 <canvas id="myChart" max-width="400" max-height="350"></canvas>
+                <p><small>*Vir: World Health Organization Global Health Observatory © 2015</small></p>
               </div>
             </div>
 
           </div>
         </div>
       </div>
-
-
-
-
-
 
 
       <div class="col-lg-8">
@@ -494,12 +490,18 @@
 
                   <div id="preventivniTab" class="tab-pane fade">
                     <h3>Preventivni ukrepi</h3>
-                    <h4 id="vseJeVredi"></h4>
+                    <h5 id="vseJeVredi"></h5>
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <p id="ukrepiDisclaimer" style="display:none;"><small>*Za podrobnosti ukrepov kliknite na ikone.</small></p>
+                      </div>
+                    </div>
                     <div class="row text-center">
 
                       <div id="smokingInfoTab" class="col-sm-3" style="display:none;">
                         <a href="#smokingIcon" data-toggle="collapse" title="Kajenje"><i class="material-icons">smoke_free</i></a>
                         <div id="smokingIcon" class="collapse">
+                          <h6 style="text-transform:uppercase;"><b>Kajenje</b></h6>
                           <p id="kajenjePrevenitva"></p>
                         </div>
                       </div>
@@ -507,6 +509,7 @@
                       <div id="alcoholInfoTab" class="col-sm-3" style="display:none;">
                         <a href="#alcoholIcon" data-toggle="collapse" title="Alkohol"><i class="material-icons">local_bar</i></a>
                         <div id="alcoholIcon" class="collapse">
+                          <h6 style="text-transform:uppercase;"><b>Alkohol</b></h6>
                           <p id="alkoholPrevenitva"></p>
                         </div>
                       </div>
@@ -514,6 +517,7 @@
                       <div id="workoutInfoTab" class="col-sm-3" style="display:none;">
                         <a href="#workoutIcon" data-toggle="collapse" title="Telovadba"><i class="material-icons">directions_run</i></a>
                         <div id="workoutIcon" class="collapse">
+                          <h6 style="text-transform:uppercase;"><b>Vadba</b></h6>
                           <p id="telovadbaPrevenitva"></p>
                         </div>
                       </div>
@@ -522,11 +526,15 @@
                       <div id="stressInfoTab" class="col-sm-3" style="display:none;">
                         <a href="#stressIcon" data-toggle="collapse" title="Stres"><i class="material-icons">sentiment_very_dissatisfied</i></a>
                         <div id="stressIcon" class="collapse">
+                          <h6 style="text-transform:uppercase;"><b>Stres</b></h6>
                           <p id="stresPrevenitva"></p>
                         </div>
                       </div>
-                      
+
                     </div>
+
+
+
                   </div>
                 </div>
               </div>

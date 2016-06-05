@@ -38,7 +38,7 @@
   <!-- KONEC: Menujska vrstica na vrhu spletne strani -->
 
   <!-- ZAČETEK: Opis delovanja aplikacije -->
-  <div class="container">
+  <div class="container" style="letter-spacing:0.02em; font-size:1.1em !important;">
     <div class="row">
       <div class="col-lg-12 text-center">
         <div class="panel panel-default">
@@ -47,8 +47,18 @@
           </div>
           <div class="panel-body">
             <!-- ZAČETEK: Opis ideje, ki jo aplikacija podpira -->
-            <p><strong>TO-DO</strong>: Na tem mestu je potrebno dodati <strong>osnovni opis ideje rešitve</strong> (kakšen je osnovni SCENARIJ UPORABE, KDO je ciljna publika, za kakšen NAMEN se aplikacija uporablja).</p>
-            <p class="text-muted">Opis naj ne bo daljši od 200 besed.</p>
+            <p class="text-muted"><b>Aplikacija je namenjena preventivi, analizi in obveščevanju o srčnem infarktu.</b></p>
+            <h6><b>SCENARIJ UPORABE:</b></h6>
+            <p>Uporabnik kreira svoj EHR zapis, vnese meritev in pod razdelkom "Analiza" aplikacija preveri vse vitalne znake in življenjske navade uporabnika, ga nazorno opozori na odstopanja od normalnih vrednosti in slabe navade, nato pa ponudi ustrezne
+              ukrepe in prikaz tveganj (glede na vitalne znake, kriterije kot so kajenje, tedenska količina gibanja, dnevna količina alkohola in količina stresa trenutnega uporabnika). V primeru, da pri analiziranem uporabniku obstajajo potencialna tveganja,
+              ga dodatno opozori tudi na razdelek "Ostali viri", kjer ima uporabnik dostop do najbližjih zdravstvenih ustanov, Wikipedia članka o infarktu, izobraževalnega Youtube videa in statistike v Sloveniji za enega glavnih krivcev za nastanek infarkta
+              - kajenje.</p>
+            <h6><b>CILJNA PUBLIKA:</b></h6>
+            <p>So uporabniki, ki jih zanima njihovo trenutno zdravstveno stanje in preventivni ukrepi, ki jih lahko izvajajo, da bi zmanjšali tveganje za nastanek srčnega infarkta.</p>
+
+            <h6><b>NAMEN:</b></h6>
+            <p>Aplikacija nudi uporabnikom analizo in vpogled v svoje zdravje in o potencialnih tveganjih za nastanek srčnih obolenj in kako le te preprečiti. Hkrati ima tudi obveščevalno funkcijo v razdelku "Ostali viri", kjer nudi uporabniku izobraževanje,
+              statistiko in zemljevid najbližjih zdravstvenih ustanov.</p>
             <!-- KONEC: Opis ideje, ki jo aplikacija podpira -->
           </div>
         </div>
@@ -58,7 +68,21 @@
           </div>
           <div class="panel-body">
             <!-- ZAČETEK: Uporabljeni zunanji viri podatkov -->
-            <p><strong>TO-DO</strong>: Na tem mestu je navesti zunanji vir podatkov (URL naslov), na kakšen način ste ga uporabili (neposredni API klic, uvožena statična datoteka ipd.) in kaj je bil namen uporabe (kako se vključuje v osnovno idejo aplikacije).</p>
+            <h6><b>UPORABLJENI ZUNANJI VIRI:</b></h6>
+            <ul>
+              <li>Google maps API (zdravstvene ustanove v bližini)</li>
+              <li>Statistični podatki: (<a href="http://apps.who.int/gho/data/view.main.1805?lang=en">http://apps.who.int/gho/data/view.main.1805?lang=en</a>)</li>
+              <li>Youtube embeded iframe: (<a href="https://www.youtube.com/watch?v=gGY2CsFsiAk">https://www.youtube.com/watch?v=gGY2CsFsiAk</a>)</li>
+              <li>Wikipedia via Embedly: (<a href="https://sl.wikipedia.org/wiki/Miokardni_infarkt">https://sl.wikipedia.org/wiki/Miokardni_infarkt</a>)</li>
+            </ul>
+            <h6><b>NAČIN IN NAMEN UPORABE:</b></h6>
+            <ul>
+              <li>Najbližje zdravstvene ustanove so pridobljene preko Google Maps API klicev ter s pomočjo HTML5 geolokacije. Namen je bil prikazati uporabniku, na katere zdravstvene ustanove naj se obrne v primeru potencialnih tveganj.</li>
+              <li>Statistični podatki so bili uvoženi kot statična JSON datoteka <em class="text-muted">(pri neposrednem klicu preko API-ja so bile težave z brskalnikom, ki je blokiral dostope preko getJSON klica zaradi cross-origin policy)</em>. Namen teh
+                podatkov je prikazati trend uporabe tobačnih izdelkov (kot enega izmed glavnih vzrokov za nastanek infarkta) v Sloveniji in kako se zmanjšuje odstotek moških in ženskih kadilcev skozi leta.</li>
+              <li>Youtube video je bil vstavljen (embeded) in njegov namen je izobraziti in obvestiti uporabnika, kako nastane miokardni infarkt.</li>
+              <li>Wikipedia članek je bil vstavljen (embeded) s pomočjo orodja Embedly. Njegov namen je izobraževanje in obveščevanje uporabnika o miokardnem infarktu.</li>
+            </ul>
             <!-- KONEC: Uporabljeni zunanji viri podatkov -->
           </div>
         </div>
@@ -68,7 +92,9 @@
           </div>
           <div class="panel-body">
             <!-- ZAČETEK: Master/detail načrtovalski vzorec -->
-            <p><strong>TO-DO</strong>: Na tem mestu morate navesti uporabljen master/detail načrtovalski vzorec in na kakšen način ga nameravate uporabiti.</p>
+            <p>Master/detail načrtovalski vzorec je bil uporabljen pri razdelku analiza: ko za različne analizirane uporabnike, pod zavihkom "Preventivni ukrepi", prikaže različne kolapsibilne (collapsible) ikone težav oz. potencialnih ukrepov in s klikom
+              na njih dobimo podrobnosti ukrepov.</p>
+            <p>Master/detail je uporabljen tudi na grafu: ko gremo z miškinim kazalcem na točke grafa (hover), se izpišejo podrobnosti (letnica, vrednosti in spol).</p>
             <!-- KONEC: Master/detail načrtovalski vzorec -->
           </div>
         </div>
@@ -78,8 +104,8 @@
           </div>
           <div class="panel-body">
             <!-- ZAČETEK: Uporabljeni zunanji viri podatkov -->
-            <p><strong>TO-DO</strong>: Na tem mestu je potrebno navesti uporabljeno tehniko vizualizacije podatkov (za pomoč lahko uporabite primer iz <a href="https://github.com/mbostock/d3/wiki/Gallery" target="_blank">D3.js galerije</a>) in zakaj je bila
-              ta tehnika izbrana.</p>
+            <p>Uporabljena tehnika za vizualizacijo podatkov: <b>Chart.js</b>. Uporabljen je črtni grafikon (line chart) z dvema krivuljama, kjer ena krivulja prikazuje moško populacijo, druga pa žensko. S tem načinom grafa je nazorno prikazan trend padanja
+              ter razmerje med žensko in moško populacijo.</p>
             <!-- KONEC: Uporabljeni zunanji viri podatkov -->
           </div>
         </div>

@@ -171,7 +171,7 @@ function pridobiPodatkeInAnaliziraj() {
     if (!EHRID) {
         $("#analyzeObvestilo").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Prosimo vnesite EHR ID pacienta.</div>");
         $("#kUkrepomButton").addClass("disabled");
-        //$("#kUkrepomButton").attr("disabled", "disabled");
+        $("#kUkrepomButton").attr("href", "#");
         podatkiPrisotni = -1;
     }
     else {
@@ -226,6 +226,7 @@ function pridobiPodatkeInAnaliziraj() {
                     error: function() {
                         alert(JSON.parse(err.responseText).userMessage);
                         $("#kUkrepomButton").addClass("disabled");
+
                     }
                 });
 
@@ -316,7 +317,8 @@ function pridobiPodatkeInAnaliziraj() {
                 });
             },
             error: function(err) {
-
+                $("#kUkrepomButton").addClass("disabled");
+                $("#kUkrepomButton").attr("href", "#");
                 alert(JSON.parse(err.responseText).userMessage);
             }
         });
@@ -407,7 +409,7 @@ function analizirajPodatke() {
                 $("#alkoholInfo").html("<b>Alkohol:</b> >= 2 enoti dnevno");
                 $("#alkoholInfo").css("color", "#d9534f");
                 $("#alcoholInfoTab").css("display", "block");
-                $("#alkoholPrevenitva").html("Prevelike količine alkohola dvignejo krvni tlak in povečajo nivo trigliceridov, kar so odlični pogoji za srčni infarkt. Moški omejite dnevno količino alkohola na 2 enoti, ženske pa na 1 enoto dnevno.");
+                $("#alkoholPrevenitva").html("Prevelike količine alkohola dvignejo krvni tlak in povečajo nivo trigliceridov, kar so odlični pogoji za srčni infarkt. Moški omejite količino alkohola na 2 enoti, ženske pa na 1 enoto dnevno.");
                 stUkrepov++;
                 break;
             default:
@@ -460,16 +462,16 @@ function analizirajPodatke() {
         analyzeDiast(trenutniDiastolic);
         $('[data-toggle="tooltip"]').tooltip();
 
-
         if (stUkrepov === 0) {
-            $("#vseJeVredi").html("<b>V tem trenutku niste rizični za nastanek srčnega infarkta. Le tako naprej!</b>");
+            $("#vseJeVredi").html("<b><i class='fa fa-heartbeat' aria-hidden='true'></i> V tem trenutku niste v rizični kategoriji za nastanek srčnega infarkta. Le tako naprej!</b>");
             $("#vseJeVredi").css("color", "#5cb85c");
+            $("#ukrepiDisclaimer").css("display", "none");
         }
         else {
-            $("#vseJeVredi").html("");
+            $("#vseJeVredi").html("<b><i class='fa fa-stethoscope'></i> Priporočeno je, da se v nadaljevanju posvetujete z zdravnikom. Za več informacij o infarktu in o najbližjih zdravstvenih ustanovah, si oglejte razdelek 'Ostali viri'.</b>");
+            $("#vseJeVredi").css("color", "#f0ad4e");
+            $("#ukrepiDisclaimer").css("display", "block");
         }
-
-
     }
     else {
         console.log("No EHRID data");
@@ -514,7 +516,6 @@ function analizaTemp(temp) {
 }
 
 //SYSTOLIC
-
 function analyzeSyst(syst) {
     if (syst < 90) {
         $("#obvestiloSystolic").html("<span class='obvestilo label label-warning fade-in' data-toggle='tooltip' data-placement='top' title='Idealna vrednost: 90 - 120 mm/Hg' >" + syst + ", sist. tlak je prenizek" + ".</span>");
@@ -532,6 +533,7 @@ function analyzeSyst(syst) {
 
     }
 }
+
 //DIASTOLIC
 function analyzeDiast(diast) {
     if (diast < 60) {
@@ -676,30 +678,55 @@ function narisiGraf() {
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            labels: letnicePodatki,
             datasets: [{
-                label: "My First dataset",
+                label: "Moški",
                 fill: false,
                 lineTension: 0.1,
-                backgroundColor: "rgba(75,192,192,0.4)",
-                borderColor: "rgba(75,192,192,1)",
+                backgroundColor: "rgba(51,122,183,0.4)",
+                borderColor: "rgba(51,122,183,1)",
                 borderCapStyle: 'butt',
                 borderDash: [],
                 borderDashOffset: 0.0,
                 borderJoinStyle: 'miter',
-                pointBorderColor: "rgba(75,192,192,1)",
+                pointBorderColor: "rgba(51,122,183,1)",
                 pointBackgroundColor: "#fff",
-                pointBorderWidth: 1,
-                pointHoverRadius: 5,
-                pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                pointBorderWidth: 5,
+                pointHoverRadius: 7,
+                pointHoverBackgroundColor: "rgba(51,122,183,1)",
                 pointHoverBorderColor: "rgba(220,220,220,1)",
                 pointHoverBorderWidth: 2,
                 pointRadius: 1,
                 pointHitRadius: 10,
-                data: [65, 59, 80, 81, 56, 55, 40],
+                data: moskiPodatki,
+            }, {
+                label: "Ženske",
+                fill: false,
+                lineTension: 0.1,
+                backgroundColor: "rgba(227,45,139,0.4)",
+                borderColor: "rgba(227,45,139,1)",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "rgba(227,45,139,1)",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 5,
+                pointHoverRadius: 7,
+                pointHoverBackgroundColor: "rgba(227,45,139,1)",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointHoverBorderWidth: 2,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: zenskiPodatki
             }]
         },
         options: {
+            responsive: true,
+            title: {
+                display: false,
+                text: 'Trend uporabe tobačnih izdelkov v Sloveniji [%]'
+            },
             scales: {
                 yAxes: [{
                     ticks: {
@@ -711,14 +738,67 @@ function narisiGraf() {
     });
 }
 //KONEC GRAFA
+var moskiPodatki = [];
+var zenskiPodatki = [];
+var letnicePodatki = [];
+
+/*
+function preberiJsonGraf(callback) {
+
+    var url = "http://apps.who.int/gho/athena/api/GHO/TOBACCO_0000000344,TOBACCO_0000000192.json?profile=simple&filter=COUNTRY:SVN;REGION:EUR;SEX:*;";
+    
+    $.getJSON(url, function(json){
+        console.log(json);
+        callback();
+    })
+
+
+}*/
+
+
+
+function preberiJsonGraf(callback) {
+
+    var url = "statistika.json";
+
+    $.getJSON(url, function(json) {
+        //alert(json.fact[0].Value); // this will show the info it in firebug console
+        //alert(json.fact[0].dims["SEX"]);
+        var tmp1, tmp2;
+
+        for (var i = 0; i < json.fact.length; i++) {
+
+            if (json.fact[i].dims["SEX"] === "Female") {
+                tmp1 = json.fact[i].Value;
+                zenskiPodatki.push(tmp1.substring(0, 4));
+                letnicePodatki.push(json.fact[i].dims["YEAR"]);
+            }
+            else {
+                tmp2 = json.fact[i].Value;
+                moskiPodatki.push(tmp2.substring(0, 4));
+            }
+        }
+
+        moskiPodatki = moskiPodatki.reverse();
+        zenskiPodatki = zenskiPodatki.reverse();
+        letnicePodatki = letnicePodatki.reverse();
+        callback();
+    });
+
+}
+
 
 //MAIN ONLOAD
 $(document).ready(function() {
+    preberiJsonGraf(function() {
+        narisiGraf();
+
+    });
 
     $('[data-toggle="tooltip"]').tooltip();
 
     getLocation();
-    narisiGraf();
+
 
     //izberi iz padajočega menija
     $("#kreirajTemplate").change(function() {
@@ -733,6 +813,7 @@ $(document).ready(function() {
         $("#stres").val(vzorcniPacienti[index][6]);
     });
 
+    //izberi iz padajočega menija
     $("#meritveTemplate").change(function() {
         var index = $("#meritveTemplate").val();
 
@@ -744,10 +825,10 @@ $(document).ready(function() {
         $("#systolicVital").val(meritvePacientov[index][5]);
         $("#diastolicVital").val(meritvePacientov[index][6]);
     });
-
+    
+    //izberi iz padajočega menija
     $("#analyzeTemplate").change(function() {
         var index = $("#analyzeTemplate").val();
-
         $("#ehrIdAnalyze").val(meritvePacientov[index][0]);
     });
 
